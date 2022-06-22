@@ -1,0 +1,40 @@
+function submit(canister, method, requires, payment) {
+  call launch_trail.submit(record {
+    canister = canister;
+    method = method;
+    requires = requires;
+    sha256 = null;
+    expires = variant { In = 60_000_000_000 };
+    activates = variant { In = 1_000_000 }; 
+    revokers = null;
+    executors = null;
+    payment = payment;
+    url = "";
+  })
+};
+
+function execute(index, args) {
+  call launch_trail.execute(record { index = index; args = args })
+};
+
+function create_canister() {
+  let result = submit(principal "aaaaa-aa", "create_canister", vec {}, 3_000_000_000_000);
+  let job = result.Ok;
+  let result = execute(job, encode (record { settings = opt record { controllers = opt vec { launch_trail } } }));
+  let result = decode result.Ok.Ok;
+  result.canister_id
+};
+
+function canister_status(canister) {
+  let result = submit(principal "aaaaa-aa", "canister_status", vec {}, 0);
+  let job = result.Ok;
+  let result = execute(job, encode (record { canister_id = canister }));
+  decode as ic.canister_status result.Ok.Ok
+};
+
+function install_canister(canister, mode, wasm_file, init_arg) {
+  let result = submit(principal "aaaaa-aa", "install_code", vec {}, 0);
+  let job = result.Ok;
+  let result = execute(job, encode (record { mode = mode; canister_id = canister; wasm_module = wasm_file; arg = init_arg; }));
+  let _ = decode result.Ok.Ok;
+};

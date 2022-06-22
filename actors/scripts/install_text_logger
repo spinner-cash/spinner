@@ -1,0 +1,8 @@
+function install_text_logger(mode) {
+  import did = "2vxsx-fae" as "dist/text_logger.did";
+  let wasm = file "dist/text_logger.wasm";
+  let arg = encode did.__init_args(
+    record {allowed = vec { canister_pool_icp } ; bucket_size = 1000; max_buckets = 1000}
+    );
+  install_canister(canister_text_logger, mode, wasm, arg)
+};

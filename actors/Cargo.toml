@@ -1,0 +1,41 @@
+[package]
+name = "spnr"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-recursion = "1.0"
+base64 = "0.13"
+bn = { git = "https://github.com/paritytech/bn", default-features = false, rev = "6079255e" }
+candid = "0.7"
+ethereum-types = { version = "0.13.1", default-features = false }
+ic-cdk = "0.5"
+ic-cdk-macros = "0.5"
+ic-ledger-types = "0.1"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+spnr-lib = "0.2.3"
+sha2 = "0.9"
+
+[dev-dependencies]
+assert_matches = "1.3"
+hex = "0.4"
+proptest = "1.0"
+
+[[bin]]
+name = "ledger"
+path = "./bin/ledger.rs"
+
+[[bin]]
+name = "pool_icp"
+path = "./bin/pool_icp.rs"
+
+[[bin]]
+name = "text_logger"
+path = "./bin/text_logger.rs"
+
+[profile.release]
+lto = true
+opt-level = 'z'
+panic = 'abort'

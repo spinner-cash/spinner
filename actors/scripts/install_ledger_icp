@@ -1,0 +1,14 @@
+function install_ledger_icp(mode) {
+  import did = "2vxsx-fae" as "dist/ledger.did";
+  let wasm = file "dist/ledger.wasm";
+  let arg = encode did.__init_args(
+    record {
+      max_level = 20;
+      token_type = record { name = "ICP"; decimal = 8 };
+      max_recent_roots = 32;
+      max_scan_range = 100;
+      allowed_callers = vec { canister_pool_icp };
+      payload_size = 112;
+    });
+  install_canister(canister_ledger_icp, mode, wasm, arg)
+};

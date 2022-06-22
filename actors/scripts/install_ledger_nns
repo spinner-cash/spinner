@@ -1,0 +1,11 @@
+function install_ledger_nns(mode) {
+  import did = "2vxsx-fae" as "dist/ledger_nns.did";
+  let wasm = file "dist/ledger_nns.wasm";
+  let arg = encode did.__init_args(
+    record {
+      minting_account = "051b05839339f89053454a4b9865ea0452a4bffe2b1cd41f4982bad10c1e637c";
+      initial_values = vec { record { account_id; record { e8s=1000_000_000_000 }}};
+      send_whitelist = vec {};
+    });
+  install_canister(canister_ledger_nns, mode, wasm, arg)
+};

@@ -1,0 +1,14 @@
+function install_pool_icp(mode) {
+  import did = "2vxsx-fae" as "dist/pool_icp.did";
+  let wasm = file "dist/pool_icp.wasm";
+  let arg = encode did.__init_args(
+    record {
+      max_event_queue_size = 5000;
+      ledger_transaction_fee = variant { Fixed = record { e8s = 10000 }};
+      token_transaction_fee = record { e8s = 10000 };
+      logger_canister_id = canister_text_logger;
+      ledger_canister_id = canister_ledger_nns;
+      ledgers = vec { canister_ledger_icp }
+    });
+  install_canister(canister_pool_icp, mode, wasm, arg)
+};

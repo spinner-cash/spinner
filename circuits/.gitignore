@@ -1,0 +1,10 @@
+*.r1cs
+*.wtns
+*.sym
+*.json
+*.zkey
+*.zkey.0
+*.rs
+*.sol
+circuit_cpp/
+circuit_js/

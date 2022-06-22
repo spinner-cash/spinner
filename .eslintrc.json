@@ -1,0 +1,18 @@
+{
+  "env": {
+      "node": true,
+      "browser": true,
+      "es6": true,
+      "mocha": true,
+      "bigint": true
+  },
+  "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2020
+  }
+}
+
